@@ -1,0 +1,2211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Amarender Reddy Voladri — Java Full Stack Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --cream: #fdfcf9;
+      --cream2: #f7f4ee;
+      --cream3: #f0ebe0;
+      --cream4: #e8e0d0;
+      --ink: #1c1a17;
+      --ink2: #3d3a34;
+      --ink3: #6b6560;
+      --gold: #b8862a;
+      --gold2: #d4a044;
+      --gold3: #f0c060;
+      --gold4: #fae8b8;
+      --gold-bg: rgba(184, 134, 42, 0.06);
+      --gold-border: rgba(184, 134, 42, 0.18);
+      --green: #2d7a4f;
+      --green-bg: rgba(45, 122, 79, 0.08);
+      --blue: #2558a8;
+      --blue-bg: rgba(37, 88, 168, 0.08);
+      --border: rgba(28, 26, 23, 0.09);
+      --border2: rgba(28, 26, 23, 0.05);
+      --shadow: 0 2px 20px rgba(28, 26, 23, 0.06);
+      --shadow2: 0 8px 48px rgba(28, 26, 23, 0.1);
+      --shadow3: 0 24px 80px rgba(28, 26, 23, 0.14);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased
+    }
+
+    * {
+      cursor: none !important
+    }
+
+    /* ── CURSOR ── */
+    #c-dot,
+    #c-ring {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%)
+    }
+
+    #c-dot {
+      width: 9px;
+      height: 9px;
+      background: var(--gold);
+      border-radius: 50%;
+      transition: width .15s, height .15s, background .2s
+    }
+
+    #c-ring {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid rgba(184, 134, 42, .5);
+      border-radius: 50%;
+      transition: width .3s, height .3s, opacity .3s
+    }
+
+    /* ── TOP ACCENT ── */
+    .accent-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold3), var(--gold2), var(--gold3), var(--gold));
+      background-size: 200% 100%;
+      animation: shimmer 4s linear infinite;
+      z-index: 200
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 0 0
+      }
+
+      100% {
+        background-position: 200% 0
+      }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 3px;
+      left: 0;
+      right: 0;
+      height: 66px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 52px;
+      background: rgba(253, 252, 249, .93);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border2)
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: .03em
+    }
+
+    .nav-logo em {
+      font-style: italic;
+      color: var(--gold)
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none
+    }
+
+    .nav-links a {
+      font-size: .73rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color .2s
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 1.5px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s
+    }
+
+    .nav-links a:hover {
+      color: var(--gold)
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1)
+    }
+
+    .nav-cta {
+      font-size: .73rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: #fff;
+      background: var(--ink);
+      padding: 10px 24px;
+      text-decoration: none;
+      transition: background .2s, transform .15s
+    }
+
+    .nav-cta:hover {
+      background: var(--gold);
+      transform: translateY(-1px)
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 96px 52px 80px;
+      position: relative;
+      overflow: hidden;
+      background: var(--cream)
+    }
+
+    .hero-canvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      animation: float 8s ease-in-out infinite
+    }
+
+    .hero-orb-1 {
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(184, 134, 42, .07) 0%, transparent 70%);
+      top: -80px;
+      right: -60px;
+      animation-delay: 0s
+    }
+
+    .hero-orb-2 {
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(184, 134, 42, .04) 0%, transparent 70%);
+      bottom: 60px;
+      left: 5%;
+      animation-delay: -3s
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(28, 26, 23, .035) 1px, transparent 1px), linear-gradient(90deg, rgba(28, 26, 23, .035) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse at 65% 50%, rgba(0, 0, 0, .1) 0%, transparent 55%)
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1)
+      }
+
+      50% {
+        transform: translateY(-20px) scale(1.04)
+      }
+    }
+
+    .hero-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 72px;
+      align-items: center;
+      position: relative;
+      z-index: 2
+    }
+
+    /* Photo */
+    .photo-wrap {
+      display: flex;
+      justify-content: flex-end;
+      position: relative
+    }
+
+    .photo-frame {
+      position: relative;
+      width: 360px;
+      height: 450px
+    }
+
+    .photo-deco-border {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 100%;
+      height: 100%;
+      border: 2px solid var(--gold3);
+      opacity: .6;
+      z-index: 0;
+      animation: border-pulse 4s ease-in-out infinite
+    }
+
+    @keyframes border-pulse {
+
+      0%,
+      100% {
+        opacity: .6;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .9;
+        transform: scale(1.005)
+      }
+    }
+
+    .photo-deco-square {
+      position: absolute;
+      bottom: -10px;
+      left: -10px;
+      width: 70px;
+      height: 70px;
+      background: var(--gold);
+      opacity: .12;
+      z-index: 0
+    }
+
+    .photo-deco-square2 {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--gold);
+      opacity: .2;
+      z-index: 0;
+      transform: rotate(45deg)
+    }
+
+    .photo-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, var(--cream3), var(--cream4));
+      border: 1px solid var(--border);
+      z-index: 1
+    }
+
+    .photo-img {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      overflow: hidden
+    }
+
+    .photo-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 10%;
+      display: block;
+      filter: contrast(1.03) saturate(.97);
+      transition: transform .7s cubic-bezier(.25, .46, .45, .94)
+    }
+
+    .photo-frame:hover .photo-img img {
+      transform: scale(1.04)
+    }
+
+    .photo-shine {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      background: linear-gradient(135deg, rgba(255, 255, 255, .08) 0%, transparent 50%);
+      pointer-events: none
+    }
+
+    .photo-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 140px;
+      background: linear-gradient(transparent, rgba(28, 26, 23, .28));
+      z-index: 4
+    }
+
+    .photo-badge {
+      position: absolute;
+      bottom: -18px;
+      left: -22px;
+      z-index: 5;
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 13px 18px;
+      box-shadow: var(--shadow2);
+      animation: badge-in .8s cubic-bezier(.34, 1.56, .64, 1) 1.2s both
+    }
+
+    @keyframes badge-in {
+      from {
+        opacity: 0;
+        transform: translateY(16px) scale(.9)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .badge-inner {
+      display: flex;
+      align-items: center;
+      gap: 9px
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse-g 2s ease-in-out infinite
+    }
+
+    @keyframes pulse-g {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(45, 122, 79, .45)
+      }
+
+      50% {
+        box-shadow: 0 0 0 6px rgba(45, 122, 79, 0)
+      }
+    }
+
+    .badge-txt {
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--green);
+      font-weight: 600
+    }
+
+    /* Hero left */
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: fade-up .7s ease .2s forwards
+    }
+
+    .ey-line {
+      width: 34px;
+      height: 1.5px;
+      background: var(--gold)
+    }
+
+    .ey-txt {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .68rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold)
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 5.5vw, 6rem);
+      font-weight: 300;
+      line-height: 1.02;
+      color: var(--ink);
+      margin-bottom: 12px;
+      opacity: 0;
+      animation: fade-up .7s ease .32s forwards
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--gold)
+    }
+
+    .hero-role {
+      font-size: .8rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      font-weight: 500;
+      margin-bottom: 30px;
+      opacity: 0;
+      animation: fade-up .7s ease .42s forwards
+    }
+
+    .hero-desc {
+      font-size: 1.02rem;
+      line-height: 1.82;
+      color: var(--ink2);
+      max-width: 490px;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fade-up .7s ease .52s forwards
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 44px;
+      opacity: 0;
+      animation: fade-up .7s ease .62s forwards
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--ink);
+      color: #fff;
+      padding: 13px 30px;
+      font-size: .78rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-decoration: none;
+      font-family: 'Inter', sans-serif;
+      transition: background .2s, transform .15s, box-shadow .2s
+    }
+
+    .btn-primary:hover {
+      background: var(--gold);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(184, 134, 42, .28)
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1.5px solid var(--border);
+      color: var(--ink);
+      padding: 13px 30px;
+      font-size: .78rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      text-decoration: none;
+      font-family: 'Inter', sans-serif;
+      transition: border-color .2s, color .2s, transform .15s
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px)
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 36px;
+      padding-top: 36px;
+      border-top: 1px solid var(--border2);
+      opacity: 0;
+      animation: fade-up .7s ease .75s forwards
+    }
+
+    .h-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.6rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 4px
+    }
+
+    .h-stat-lbl {
+      font-size: .68rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ink3)
+    }
+
+    @keyframes fade-up {
+      from {
+        opacity: 0;
+        transform: translateY(24px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 108px 52px
+    }
+
+    .sec-wrap {
+      max-width: 1160px;
+      margin: 0 auto
+    }
+
+    .sec-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .66rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px
+    }
+
+    .sec-tag::before {
+      content: '';
+      width: 26px;
+      height: 1.5px;
+      background: var(--gold)
+    }
+
+    .sec-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.4rem);
+      font-weight: 300;
+      line-height: 1.12;
+      color: var(--ink);
+      margin-bottom: 60px
+    }
+
+    .sec-heading em {
+      font-style: italic;
+      color: var(--gold)
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--cream2)
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 76px;
+      align-items: start
+    }
+
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.65;
+      border-left: 3px solid var(--gold);
+      padding-left: 26px;
+      margin-bottom: 32px;
+      color: var(--ink)
+    }
+
+    .about-body p {
+      font-size: .98rem;
+      line-height: 1.88;
+      color: var(--ink2);
+      margin-bottom: 20px
+    }
+
+    .info-block {
+      display: flex;
+      flex-direction: column
+    }
+
+    .info-item {
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border2)
+    }
+
+    .info-item:first-child {
+      border-top: 1px solid var(--border2)
+    }
+
+    .info-key {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .63rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 4px;
+      opacity: .7
+    }
+
+    .info-val {
+      font-size: .88rem;
+      color: var(--ink);
+      font-weight: 400
+    }
+
+    .info-val a {
+      color: var(--gold);
+      text-decoration: none
+    }
+
+    .info-val a:hover {
+      text-decoration: underline
+    }
+
+    .info-green {
+      color: var(--green);
+      font-weight: 500
+    }
+
+    /* ── SKILLS ── */
+    #skills {
+      background: var(--cream)
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border)
+    }
+
+    .skill-card {
+      background: var(--cream);
+      padding: 38px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: background .3s
+    }
+
+    .skill-card:hover {
+      background: #fff
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(var(--gold), var(--gold3));
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform .4s ease
+    }
+
+    .skill-card:hover::before {
+      transform: scaleY(1)
+    }
+
+    .sc-icon {
+      font-size: 1.6rem;
+      margin-bottom: 16px;
+      display: block
+    }
+
+    .sc-cat {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .63rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 9px
+    }
+
+    .skill-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 18px
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px
+    }
+
+    .chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .64rem;
+      padding: 5px 11px;
+      border: 1px solid var(--border);
+      color: var(--ink3);
+      background: var(--cream2);
+      transition: all .2s;
+      letter-spacing: .03em
+    }
+
+    .skill-card:hover .chip {
+      border-color: var(--gold-border);
+      color: var(--gold);
+      background: var(--gold-bg)
+    }
+
+    /* ── EXPERIENCE ── */
+    #experience {
+      background: var(--cream2)
+    }
+
+    .exp-tl {
+      padding-left: 38px;
+      position: relative
+    }
+
+    .exp-tl::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      bottom: 0;
+      width: 1.5px;
+      background: linear-gradient(var(--gold), rgba(184, 134, 42, .15))
+    }
+
+    .exp-item {
+      position: relative;
+      margin-bottom: 56px
+    }
+
+    .exp-item::before {
+      content: '';
+      position: absolute;
+      left: -42px;
+      top: 8px;
+      width: 9px;
+      height: 9px;
+      border: 1.5px solid var(--gold);
+      background: var(--cream2);
+      transform: rotate(45deg)
+    }
+
+    .exp-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 13px;
+      flex-wrap: wrap
+    }
+
+    .exp-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .7rem;
+      color: var(--gold);
+      letter-spacing: .05em
+    }
+
+    .exp-badge {
+      font-size: .61rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      background: var(--green-bg);
+      border: 1px solid rgba(45, 122, 79, .22);
+      color: var(--green)
+    }
+
+    .exp-company {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--ink);
+      margin-bottom: 4px
+    }
+
+    .exp-role {
+      font-size: .78rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 22px
+    }
+
+    .exp-pts {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 11px
+    }
+
+    .exp-pts li {
+      font-size: .93rem;
+      line-height: 1.77;
+      color: var(--ink2);
+      padding-left: 20px;
+      position: relative
+    }
+
+    .exp-pts li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-size: .85rem
+    }
+
+    /* ── PROJECTS ── */
+    #projects {
+      background: var(--cream)
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px
+    }
+
+    /* Project card with image */
+    .proj-card {
+      background: #fff;
+      border: 1px solid var(--border2);
+      overflow: hidden;
+      position: relative;
+      transition: transform .4s cubic-bezier(.25, .46, .45, .94), box-shadow .4s;
+      box-shadow: var(--shadow)
+    }
+
+    .proj-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow3)
+    }
+
+    .proj-img-wrap {
+      position: relative;
+      height: 220px;
+      overflow: hidden
+    }
+
+    .proj-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .7s cubic-bezier(.25, .46, .45, .94)
+    }
+
+    .proj-card:hover .proj-img-wrap img {
+      transform: scale(1.06)
+    }
+
+    .proj-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent 50%, rgba(28, 26, 23, .55))
+    }
+
+    .proj-img-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(253, 252, 249, .92);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      padding: 5px 12px
+    }
+
+    .proj-img-badge span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--gold)
+    }
+
+    .proj-num {
+      position: absolute;
+      bottom: 14px;
+      right: 18px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.2rem;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(253, 252, 249, .6);
+      line-height: 1
+    }
+
+    .proj-body {
+      padding: 32px 32px 36px
+    }
+
+    .proj-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 5px
+    }
+
+    .proj-sub {
+      font-size: .8rem;
+      color: var(--ink3);
+      font-style: italic;
+      margin-bottom: 18px
+    }
+
+    .proj-desc {
+      font-size: .9rem;
+      line-height: 1.78;
+      color: var(--ink2);
+      margin-bottom: 20px
+    }
+
+    .proj-pts {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 22px
+    }
+
+    .proj-pts li {
+      font-size: .84rem;
+      color: var(--ink2);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.65
+    }
+
+    .proj-pts li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-size: .95rem
+    }
+
+    .proj-techs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px
+    }
+
+    .tech-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .63rem;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      color: var(--ink3);
+      transition: all .2s
+    }
+
+    .proj-card:hover .tech-pill {
+      border-color: var(--gold-border);
+      color: var(--gold)
+    }
+
+    /* ── EDUCATION ── */
+    #education {
+      background: var(--cream2)
+    }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--border)
+    }
+
+    .edu-card {
+      background: var(--cream2);
+      padding: 46px 42px;
+      position: relative;
+      overflow: hidden;
+      transition: background .3s
+    }
+
+    .edu-card:hover {
+      background: #fff
+    }
+
+    .edu-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2.5px;
+      background: linear-gradient(90deg, var(--gold), var(--gold3));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .45s ease
+    }
+
+    .edu-card:hover::after {
+      transform: scaleX(1)
+    }
+
+    .edu-icon {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      display: block
+    }
+
+    .edu-period {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .68rem;
+      color: var(--gold);
+      letter-spacing: .05em;
+      margin-bottom: 11px
+    }
+
+    .edu-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 7px
+    }
+
+    .edu-school {
+      font-size: .86rem;
+      color: var(--ink3);
+      margin-bottom: 4px
+    }
+
+    .edu-sub {
+      font-size: .76rem;
+      color: var(--ink3);
+      opacity: .65;
+      font-style: italic;
+      margin-bottom: 18px
+    }
+
+    .edu-score {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 16px;
+      background: var(--gold-bg);
+      border: 1px solid var(--gold-border)
+    }
+
+    .edu-score-lbl {
+      font-size: .63rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--ink3)
+    }
+
+    .edu-score-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      font-weight: 600
+    }
+
+    /* ── CERTS ── */
+    #certifications {
+      background: var(--cream)
+    }
+
+    .cert-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border)
+    }
+
+    .cert-row {
+      background: var(--cream);
+      padding: 26px 36px;
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      transition: background .2s;
+      position: relative;
+      overflow: hidden
+    }
+
+    .cert-row::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      background: var(--gold);
+      transition: width .35s
+    }
+
+    .cert-row:hover {
+      background: #fff
+    }
+
+    .cert-row:hover::before {
+      width: 3px
+    }
+
+    .cert-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+      width: 46px;
+      text-align: center
+    }
+
+    .cert-body {
+      flex: 1
+    }
+
+    .cert-name {
+      font-size: .97rem;
+      color: var(--ink);
+      font-weight: 500;
+      margin-bottom: 4px
+    }
+
+    .cert-issuer {
+      font-size: .8rem;
+      color: var(--ink3)
+    }
+
+    .cert-yr {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .73rem;
+      color: var(--gold);
+      letter-spacing: .05em
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 108px 52px
+    }
+
+    #contact .sec-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center
+    }
+
+    .contact-h {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 4vw, 4rem);
+      font-weight: 300;
+      line-height: 1.12;
+      color: var(--cream);
+      margin-bottom: 22px
+    }
+
+    .contact-h em {
+      font-style: italic;
+      color: var(--gold3)
+    }
+
+    .contact-desc {
+      font-size: .98rem;
+      line-height: 1.82;
+      color: rgba(253, 252, 249, .58);
+      margin-bottom: 34px
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: rgba(253, 252, 249, .07)
+    }
+
+    .cl {
+      background: rgba(253, 252, 249, .03);
+      padding: 19px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      transition: background .2s
+    }
+
+    .cl:hover {
+      background: rgba(253, 252, 249, .07)
+    }
+
+    .cl-icon {
+      font-size: 1.2rem;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0
+    }
+
+    .cl-body {
+      flex: 1
+    }
+
+    .cl-lbl {
+      font-size: .6rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(253, 252, 249, .32);
+      margin-bottom: 3px
+    }
+
+    .cl-val {
+      font-size: .88rem;
+      color: rgba(253, 252, 249, .82);
+      transition: color .2s
+    }
+
+    .cl:hover .cl-val {
+      color: var(--gold3)
+    }
+
+    .cl-arr {
+      color: rgba(253, 252, 249, .22);
+      transition: transform .2s, color .2s
+    }
+
+    .cl:hover .cl-arr {
+      transform: translateX(4px);
+      color: var(--gold3)
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink2);
+      padding: 26px 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(253, 252, 249, .06)
+    }
+
+    .fc {
+      font-size: .73rem;
+      color: rgba(253, 252, 249, .28);
+      letter-spacing: .05em
+    }
+
+    .fl {
+      font-size: .73rem;
+      color: rgba(253, 252, 249, .28)
+    }
+
+    .fl span {
+      color: var(--gold3)
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .r {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .75s ease, transform .75s ease
+    }
+
+    .r.in {
+      opacity: 1;
+      transform: none
+    }
+
+    .d1 {
+      transition-delay: .08s
+    }
+
+    .d2 {
+      transition-delay: .16s
+    }
+
+    .d3 {
+      transition-delay: .24s
+    }
+
+    .d4 {
+      transition-delay: .32s
+    }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1024px) {
+
+      .hero-inner,
+      .about-grid,
+      #contact .sec-wrap {
+        grid-template-columns: 1fr;
+        gap: 48px
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .projects-grid,
+      .edu-grid {
+        grid-template-columns: 1fr
+      }
+
+      section {
+        padding: 80px 28px
+      }
+
+      #hero {
+        padding: 96px 28px 70px
+      }
+
+      nav {
+        padding: 0 24px
+      }
+
+      .photo-wrap {
+        justify-content: center
+      }
+    }
+
+    @media(max-width:700px) {
+      .skills-grid {
+        grid-template-columns: 1fr
+      }
+
+      .nav-links,
+      .nav-cta {
+        display: none
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 7px;
+        text-align: center
+      }
+
+      .photo-frame {
+        width: 290px;
+        height: 360px
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--cream)
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--gold)
+    }
+  </style>
+</head>
+
+<body>
+  <div class="accent-line"></div>
+  <div id="c-dot"></div>
+  <div id="c-ring"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">Amarender <em>Reddy</em></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="mailto:amarenderredddy.voladri@gmail.com" class="nav-cta">Hire Me</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-canvas">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-grid"></div>
+    </div>
+    <div class="hero-inner">
+      <!-- Left -->
+      <div>
+        <div class="hero-eyebrow">
+          <div class="ey-line"></div><span class="ey-txt">Java Full Stack Developer</span>
+        </div>
+        <h1 class="hero-name">Amarender <em>Reddy</em> Voladri</h1>
+        <p class="hero-role">Backend · Frontend · Microservices · Security</p>
+        <p class="hero-desc">Crafting secure, high-performance enterprise applications with Java &amp; Spring Boot,
+          Angular frontends, and clean RESTful APIs. MCA graduate · Harini TechSpark Pvt. Ltd., Hyderabad.</p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn-primary">Get In Touch →</a>
+          <a href="#projects" class="btn-secondary">View Projects</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="h-stat-num">1+</div>
+            <div class="h-stat-lbl">Years Exp.</div>
+          </div>
+          <div>
+            <div class="h-stat-num">2</div>
+            <div class="h-stat-lbl">Live Projects</div>
+          </div>
+          <div>
+            <div class="h-stat-num">8.0</div>
+            <div class="h-stat-lbl">MCA CGPA</div>
+          </div>
+          <div>
+            <div class="h-stat-num">3</div>
+            <div class="h-stat-lbl">Certifications</div>
+          </div>
+        </div>
+      </div>
+      <!-- Right – Photo -->
+      <div class="photo-wrap">
+        <div class="photo-frame">
+          <div class="photo-deco-border"></div>
+          <div class="photo-deco-square"></div>
+          <div class="photo-deco-square2"></div>
+          <div class="photo-bg"></div>
+          <div class="photo-img">
+            <img src="./assets/portfolio_profile_pic.jpg"
+              alt="Amarender Reddy Voladri — Java Full Stack Developer" />
+          </div>
+          <div class="photo-shine"></div>
+          <div class="photo-overlay"></div>
+          <div class="photo-badge">
+            <div class="badge-inner">
+              <div class="badge-dot"></div><span class="badge-txt">Open to Opportunities</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="sec-wrap">
+      <div class="r">
+        <div class="sec-tag">01 · About Me</div>
+        <h2 class="sec-heading">The <em>Story</em> Behind the Code</h2>
+      </div>
+      <div class="about-grid">
+        <div class="r d1">
+          <div class="about-quote">"Great software isn't just functional — it is secure, scalable, and thoughtfully
+            crafted to last."</div>
+          <div class="about-body">
+            <p>I am a Full Stack Java Developer based in Hyderabad, Telangana, with a Master of Computer Applications
+              from Osmania University and hands-on professional experience at Harini TechSpark Pvt. Ltd. I completed
+              Capgemini's Java Full Stack Development Program, cementing my expertise across modern backend and frontend
+              technologies.</p>
+            <p>My professional focus has been on real enterprise applications — from automated employee onboarding
+              systems to comprehensive school administration portals. I take pride in writing clean, secure, and
+              maintainable code, with strong emphasis on JWT authentication, Role-Based Access Control, and proper API
+              design patterns.</p>
+            <p>I bring a collaborative, problem-solving mindset shaped by Agile Scrum environments, spanning full
+              end-to-end SDLC from requirements gathering all the way to deployment and production debugging.</p>
+          </div>
+        </div>
+        <div class="r d2">
+          <div class="info-block">
+            <div class="info-item">
+              <div class="info-key">Location</div>
+              <div class="info-val">Hyderabad, Telangana, India</div>
+            </div>
+            <div class="info-item">
+              <div class="info-key">Email</div>
+              <div class="info-val"><a
+                  href="mailto:amarenderredddy.voladri@gmail.com">amarenderredddy.voladri@gmail.com</a></div>
+            </div>
+            <div class="info-item">
+              <div class="info-key">Phone</div>
+              <div class="info-val"><a href="tel:+917569118704">+91 7569118704</a></div>
+            </div>
+            <div class="info-item">
+              <div class="info-key">LinkedIn</div>
+              <div class="info-val"><a href="https://linkedin.com/in/amarender-reddy-voladri"
+                  target="_blank">amarender-reddy-voladri</a></div>
+            </div>
+            <div class="info-item">
+              <div class="info-key">GitHub</div>
+              <div class="info-val"><a href="https://github.com/amarenderreddyvoladri"
+                  target="_blank">amarenderreddyvoladri</a></div>
+            </div>
+            <div class="info-item">
+              <div class="info-key">Languages</div>
+              <div class="info-val">English · Hindi · Telugu</div>
+            </div>
+            <div class="info-item">
+              <div class="info-key">Status</div>
+              <div class="info-val"><span class="info-green">● Open to Opportunities</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="sec-wrap">
+      <div class="r">
+        <div class="sec-tag">02 · Technical Skills</div>
+        <h2 class="sec-heading">Areas of <em>Expertise</em></h2>
+      </div>
+      <div class="skills-grid">
+
+        <div class="skill-card r">
+          <span class="sc-icon">⚙️</span>
+          <div class="sc-cat">Backend Development</div>
+          <h3>Server-Side Engineering</h3>
+          <div class="chips">
+            <span class="chip">Java</span>
+            <span class="chip">Spring Boot</span>
+            <span class="chip">Spring Security</span>
+            <span class="chip">JWT Auth</span>
+            <span class="chip">RBAC</span>
+            <span class="chip">REST APIs</span>
+            <span class="chip">Hibernate</span>
+            <span class="chip">JPA</span>
+            <span class="chip">JDBC</span>
+            <span class="chip">API Gateway</span>
+            <span class="chip">Redis</span>
+            <span class="chip">Kafka</span>
+          </div>
+        </div>
+
+        <div class="skill-card r d1">
+          <span class="sc-icon">🎨</span>
+          <div class="sc-cat">Frontend Development</div>
+          <h3>Client-Side Interfaces</h3>
+          <div class="chips">
+            <span class="chip">Angular</span>
+            <span class="chip">Angular Material</span>
+            <span class="chip">HTML5</span>
+            <span class="chip">CSS3</span>
+            <span class="chip">Bootstrap</span>
+            <span class="chip">Reactive Forms</span>
+            <span class="chip">TypeScript</span>
+          </div>
+        </div>
+
+        <div class="skill-card r d2">
+          <span class="sc-icon">🗄️</span>
+          <div class="sc-cat">Database &amp; Querying</div>
+          <h3>Data Management</h3>
+          <div class="chips">
+            <span class="chip">MySQL</span>
+            <span class="chip">SQL Joins</span>
+            <span class="chip">Indexing</span>
+            <span class="chip">Query Optimization</span>
+            <span class="chip">CRUD Operations</span>
+          </div>
+        </div>
+
+        <div class="skill-card r">
+          <span class="sc-icon">🏗️</span>
+          <div class="sc-cat">Architecture &amp; Design</div>
+          <h3>System Design</h3>
+          <div class="chips">
+            <span class="chip">Microservices</span>
+            <span class="chip">RESTful Architecture</span>
+            <span class="chip">System Design</span>
+            <span class="chip">Eureka Service Registry</span>
+            <span class="chip">Agile Scrum</span>
+            <span class="chip">SDLC</span>
+            <span class="chip">Unit Testing</span>
+            <span class="chip">Debugging</span>
+          </div>
+        </div>
+
+        <div class="skill-card r d1">
+          <span class="sc-icon">🛠️</span>
+          <div class="sc-cat">DevOps &amp; Tooling</div>
+          <h3>Development Tools</h3>
+          <div class="chips">
+            <span class="chip">Git</span>
+            <span class="chip">GitHub</span>
+            <span class="chip">Maven</span>
+            <span class="chip">Docker</span>
+            <span class="chip">Kubernetes</span>
+            <span class="chip">CI/CD</span>
+            <span class="chip">Postman</span>
+            <span class="chip">Eclipse IDE</span>
+            <span class="chip">VS Code</span>
+            <span class="chip">AWS</span>
+          </div>
+        </div>
+
+        <div class="skill-card r d2">
+          <span class="sc-icon">🤖</span>
+          <div class="sc-cat">Emerging Technologies</div>
+          <h3>AI &amp; Modern Stack</h3>
+          <div class="chips">
+            <span class="chip">Generative AI</span>
+            <span class="chip">LLM Fundamentals</span>
+            <span class="chip">Prompt Engineering</span>
+            <span class="chip">API Integration</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="sec-wrap">
+      <div class="r">
+        <div class="sec-tag">03 · Work Experience</div>
+        <h2 class="sec-heading">Professional <em>Journey</em></h2>
+      </div>
+
+      <div class="exp-tl">
+        <div class="exp-item r">
+
+          <div class="exp-meta">
+            <span class="exp-date">March 2025 — Present</span>
+            <span class="exp-badge">Current Role</span>
+          </div>
+
+          <div class="exp-company">Harini TechSpark Pvt. Ltd.</div>
+
+          <div class="exp-role">
+            Software Engineer Associate · Hyderabad, Telangana
+          </div>
+
+          <ul class="exp-pts">
+
+            <li>
+              Worked on enterprise-level HR and employee management modules using
+              Java, Spring Boot, and Angular, contributing to both backend APIs
+              and frontend feature enhancements in a microservices-based environment.
+            </li>
+
+            <li>
+              Developed and maintained REST APIs for employee onboarding, attendance,
+              leave management, and user administration modules, ensuring smooth
+              integration between backend services and Angular UI components.
+            </li>
+
+            <li>
+              Implemented secure authentication and authorization using Spring Security,
+              JWT, and Role-Based Access Control (RBAC) to protect sensitive employee
+              and organizational data across multiple application modules.
+            </li>
+
+            <li>
+              Worked extensively with Hibernate/JPA and MySQL for handling CRUD
+              operations, writing optimized SQL queries, managing entity relationships,
+              and improving database performance for day-to-day operations.
+            </li>
+
+            <li>
+              Contributed to frontend development using Angular, TypeScript, Reactive
+              Forms, and Angular Material by building responsive forms, integrating APIs,
+              handling validations, and improving user experience for internal users.
+            </li>
+
+            <li>
+              Participated in debugging and issue resolution by analyzing logs,
+              fixing API integration issues, resolving frontend bugs, and supporting
+              production deployments to maintain application stability.
+            </li>
+
+            <li>
+              Worked in Agile Scrum methodology with daily stand-ups, sprint planning,
+              code reviews, and task tracking, collaborating closely with senior
+              developers, testers, and business teams for timely feature delivery.
+            </li>
+
+            <li>
+              Gained hands-on exposure to Docker, API Gateway, Eureka Service Registry,
+              Redis caching, and Kafka messaging while working on modern microservices
+              architecture and deployment workflows.
+            </li>
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="sec-wrap">
+      <div class="r">
+        <div class="sec-tag">04 · Featured Projects</div>
+        <h2 class="sec-heading">Work That <em>Matters</em></h2>
+      </div>
+      <div class="projects-grid">
+
+        <!-- Project 1 -->
+        <div class="proj-card r">
+
+          <div class="proj-img-wrap">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=900&q=90&fit=crop"
+              alt="Employee Onboarding Platform" />
+
+            <div class="proj-img-overlay"></div>
+
+            <div class="proj-img-badge">
+              <span>HRMS Enterprise Application</span>
+            </div>
+
+            <div class="proj-num">01</div>
+          </div>
+
+          <!-- ----------------------------------------------------------------------------------------- -->
+          <!-- Project 1 -->
+          <div class="proj-body">
+
+            <h3>Employee Onboarding & HR Management Portal</h3>
+
+            <p class="proj-sub">
+              Enterprise HRMS Platform for Employee Lifecycle & Workforce Operations
+            </p>
+
+            <p class="proj-desc">
+              Worked as a Software Engineer Associate on a real-time enterprise HRMS
+              application used for employee onboarding, user access management,
+              attendance workflows, and internal HR operations. Contributed to backend
+              API development, frontend integration, authentication modules, database
+              operations, debugging, and deployment support in a microservices-based
+              architecture.
+            </p>
+
+            <ul class="proj-pts">
+
+              <li>
+                Developed and maintained RESTful APIs using Java and Spring Boot for
+                onboarding workflows, employee profile management, role assignment,
+                approval processes, and real-time status tracking modules.
+              </li>
+
+              <li>
+                Implemented Spring Security, JWT authentication, and Role-Based Access
+                Control (RBAC) for Admin, HR, and Employee modules to ensure secure
+                access management across the application.
+              </li>
+
+              <li>
+                Worked on Angular frontend development using Reactive Forms,
+                TypeScript, Angular Material, and API integration for dynamic forms,
+                validations, dashboards, and user interaction workflows.
+              </li>
+
+              <li>
+                Used Hibernate/JPA with MySQL for CRUD operations, entity mapping,
+                optimized queries, and database-level validations to improve data
+                handling efficiency.
+              </li>
+
+              <li>
+                Collaborated in Agile Scrum environment with daily stand-ups, sprint
+                planning, bug fixing, code reviews, testing, and feature enhancement
+                activities during release cycles.
+              </li>
+
+              <li>
+                Participated in debugging production issues, API testing using
+                Postman, fixing response validation problems, and supporting deployment
+                activities for stable application releases.
+              </li>
+
+              <li>
+                Worked with microservices architecture using API Gateway and Eureka
+                Service Registry for service communication and centralized routing
+                across backend services.
+              </li>
+
+              <li>
+                Gained hands-on exposure to Docker containerization, Redis caching,
+                Kafka event-based communication, Git version control, and CI/CD
+                deployment workflows in development and testing environments.
+              </li>
+
+            </ul>
+
+            <div class="proj-techs">
+              <span class="tech-pill">Java</span>
+              <span class="tech-pill">Spring Boot</span>
+              <span class="tech-pill">Spring Security</span>
+              <span class="tech-pill">JWT</span>
+              <span class="tech-pill">RBAC</span>
+              <span class="tech-pill">Angular</span>
+              <span class="tech-pill">TypeScript</span>
+              <span class="tech-pill">Reactive Forms</span>
+              <span class="tech-pill">REST APIs</span>
+              <span class="tech-pill">Hibernate</span>
+              <span class="tech-pill">JPA</span>
+              <span class="tech-pill">MySQL</span>
+              <span class="tech-pill">Microservices</span>
+              <span class="tech-pill">API Gateway</span>
+              <span class="tech-pill">Eureka</span>
+              <span class="tech-pill">Docker</span>
+              <span class="tech-pill">Redis</span>
+              <span class="tech-pill">Kafka</span>
+              <span class="tech-pill">Git</span>
+              <span class="tech-pill">Postman</span>
+              <span class="tech-pill">CI/CD</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="proj-card r d1">
+
+          <div class="proj-img-wrap">
+            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=900&q=90&fit=crop"
+              alt="Spring Security Template Project" />
+
+            <div class="proj-img-overlay"></div>
+
+            <div class="proj-img-badge">
+              <span>Personal Production-Style Project</span>
+            </div>
+
+            <div class="proj-num">02</div>
+          </div>
+
+          <!-- ----------------------------------------------------------------------------------------- -->
+          <!-- Project 2 -->
+
+          <div class="proj-body">
+
+            <h3>Enterprise Spring Security Template | Personal Project</h3>
+
+            <p class="proj-sub">
+              Production-Ready Authentication & Authorization Microservice
+            </p>
+
+            <p class="proj-desc">
+              Designed and developed a reusable enterprise-grade Spring Security
+              template project focused on secure authentication, authorization,
+              scalable backend architecture, and API protection. Built as a
+              production-style personal project to simulate real-world enterprise
+              security implementations commonly used in modern HRMS, fintech,
+              SaaS, and microservices-based applications.
+            </p>
+
+            <ul class="proj-pts">
+
+              <li>
+                Architected a secure authentication and authorization system using
+                Spring Security 6, JWT authentication, Role-Based Access Control
+                (RBAC), and stateless session management for scalable enterprise APIs.
+              </li>
+
+              <li>
+                Implemented complete login and registration workflows with encrypted
+                password storage using BCrypt, secure token generation, refresh token
+                handling, and endpoint-level authorization.
+              </li>
+
+              <li>
+                Developed reusable REST APIs following layered architecture patterns
+                including Controller, Service, Repository, DTO, Exception Handling,
+                and Validation layers for clean and maintainable code structure.
+              </li>
+
+              <li>
+                Built custom exception handling, centralized API response structures,
+                validation mechanisms, and standardized error responses to improve
+                API reliability and debugging efficiency.
+              </li>
+
+              <li>
+                Configured Spring Data JPA and MySQL for user management, role mapping,
+                audit fields, and optimized database operations with proper entity
+                relationships and query handling.
+              </li>
+
+              <li>
+                Integrated API documentation using Swagger/OpenAPI for easier API
+                testing, developer onboarding, and enterprise-level API visibility.
+              </li>
+
+              <li>
+                Added Docker support for containerized deployment and created
+                environment-based configuration setup for development and production
+                profiles.
+              </li>
+
+              <li>
+                Implemented Redis caching concepts for token/session optimization and
+                explored Kafka-based event communication for scalable microservices
+                integration patterns.
+              </li>
+
+              <li>
+                Applied secure coding practices including CORS configuration,
+                endpoint protection, input validation, password encryption, and secure
+                request filtering aligned with modern backend security standards.
+              </li>
+
+              <li>
+                Practiced Git workflow, code modularization, debugging, logging,
+                Postman API testing, and CI/CD-ready project structure to simulate
+                real-world software engineering practices.
+              </li>
+
+            </ul>
+
+            <div class="proj-techs">
+              <span class="tech-pill">Java</span>
+              <span class="tech-pill">Spring Boot</span>
+              <span class="tech-pill">Spring Security</span>
+              <span class="tech-pill">JWT Authentication</span>
+              <span class="tech-pill">RBAC</span>
+              <span class="tech-pill">REST APIs</span>
+              <span class="tech-pill">Hibernate</span>
+              <span class="tech-pill">JPA</span>
+              <span class="tech-pill">MySQL</span>
+              <span class="tech-pill">Microservices</span>
+              <span class="tech-pill">API Gateway</span>
+              <span class="tech-pill">Redis</span>
+              <span class="tech-pill">Kafka</span>
+              <span class="tech-pill">Docker</span>
+              <span class="tech-pill">Swagger</span>
+              <span class="tech-pill">Postman</span>
+              <span class="tech-pill">Git</span>
+              <span class="tech-pill">CI/CD</span>
+              <span class="tech-pill">System Design</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="proj-card r d2">
+          <div class="proj-img-wrap">
+            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=90&fit=crop"
+              alt="School Administration Portal" />
+            <div class="proj-img-overlay"></div>
+            <div class="proj-img-badge"><span>Admin Platform</span></div>
+            <div class="proj-num">02</div>
+          </div>
+          <div class="proj-body">
+            <h3>SchoolAdmin Portal | Personal Project</h3>
+            <p class="proj-sub">Comprehensive Digital Platform for School Administration</p>
+            <p class="proj-desc">A full-featured school management system covering student management, attendance
+              tracking, analytics dashboards, and fee tracking — with role-based access for Admin, Staff, and Students.
+            </p>
+            <ul class="proj-pts">
+              <li>Built student management, attendance tracking, and fee management modules</li>
+              <li>Integrated Spring Boot REST APIs with Angular frontend for reactive data flow</li>
+              <li>Implemented role-based access control for Admin, Staff, and Student users</li>
+              <li>Wrote optimized SQL queries; resolved data fetching and performance bottlenecks</li>
+            </ul>
+            <div class="proj-techs"><span class="tech-pill">Java</span><span class="tech-pill">Spring Boot</span><span
+                class="tech-pill">Angular</span><span class="tech-pill">MySQL</span><span
+                class="tech-pill">RBAC</span><span class="tech-pill">REST API</span><span class="tech-pill">Maven</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="sec-wrap">
+      <div class="r">
+        <div class="sec-tag">05 · Education</div>
+        <h2 class="sec-heading">Academic <em>Foundation</em></h2>
+      </div>
+      <div class="edu-grid">
+        <div class="edu-card r">
+          <span class="edu-icon">🎓</span>
+          <div class="edu-period">Aug 2022 — Nov 2024</div>
+          <h3>Master of Computer Applications</h3>
+          <div class="edu-school">Aurora's PG College, Osmania University · Hyderabad</div>
+          <div class="edu-sub">Computer Science</div>
+          <div class="edu-score"><span class="edu-score-lbl">CGPA</span><span class="edu-score-val">8.0 / 10</span>
+          </div>
+        </div>
+        <div class="edu-card r d2">
+          <span class="edu-icon">📚</span>
+          <div class="edu-period">Jun 2018 — Nov 2021</div>
+          <h3>Bachelor of Science (BSc)</h3>
+          <div class="edu-school">Jagruthi Degree &amp; PG College, Osmania University · Hyderabad</div>
+          <div class="edu-sub">Mathematics, Physics &amp; Computer Science (MPCs)</div>
+          <div class="edu-score"><span class="edu-score-lbl">CGPA</span><span class="edu-score-val">8.35 / 10</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="sec-wrap">
+      <div class="r">
+        <div class="sec-tag">06 · Credentials</div>
+        <h2 class="sec-heading">Certifications &amp; <em>Training</em></h2>
+      </div>
+      <div class="cert-stack r">
+        <div class="cert-row">
+          <div class="cert-icon">☕</div>
+          <div class="cert-body">
+            <div class="cert-name">Java Full Stack Development Program</div>
+            <div class="cert-issuer">EduBridge — Capgemini Sponsored · Industry-grade full stack curriculum</div>
+          </div>
+          <div class="cert-yr">2024</div>
+        </div>
+        <div class="cert-row">
+          <div class="cert-icon">🤖</div>
+          <div class="cert-body">
+            <div class="cert-name">Generative AI Fundamentals — LLMs &amp; Prompt Engineering</div>
+            <div class="cert-issuer">Harini TechSpark Pvt. Ltd. · Applied AI &amp; modern language model techniques
+            </div>
+          </div>
+          <div class="cert-yr">2025</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="sec-wrap">
+      <div class="r">
+        <h2 class="contact-h">Let's Build Something <em>Great</em> Together</h2>
+        <p class="contact-desc">I am actively seeking opportunities as a Java Full Stack Developer where I can
+          contribute my practical experience, grow technically, and be part of a high-performing engineering team.
+          Whether you are a recruiter, hiring manager, or fellow developer — let's connect.</p>
+        <a href="mailto:amarenderredddy.voladri@gmail.com" class="btn-primary"
+          style="display:inline-flex;align-items:center;gap:10px;">Send an Email →</a>
+      </div>
+      <div class="r d2">
+        <div class="contact-links">
+          <a href="mailto:amarenderredddy.voladri@gmail.com" class="cl">
+            <div class="cl-icon">✉️</div>
+            <div class="cl-body">
+              <div class="cl-lbl">Email</div>
+              <div class="cl-val">amarenderredddy.voladri@gmail.com</div>
+            </div><span class="cl-arr">→</span>
+          </a>
+          <a href="tel:+917569118704" class="cl">
+            <div class="cl-icon">📱</div>
+            <div class="cl-body">
+              <div class="cl-lbl">Phone</div>
+              <div class="cl-val">+91 7569118704</div>
+            </div><span class="cl-arr">→</span>
+          </a>
+          <a href="https://linkedin.com/in/amarender-reddy-voladri" target="_blank" class="cl">
+            <div class="cl-icon">💼</div>
+            <div class="cl-body">
+              <div class="cl-lbl">LinkedIn</div>
+              <div class="cl-val">amarender-reddy-voladri</div>
+            </div><span class="cl-arr">→</span>
+          </a>
+          <a href="https://github.com/amarenderreddyvoladri" target="_blank" class="cl">
+            <div class="cl-icon">🐙</div>
+            <div class="cl-body">
+              <div class="cl-lbl">GitHub</div>
+              <div class="cl-val">amarenderreddyvoladri</div>
+            </div><span class="cl-arr">→</span>
+          </a>
+          <div class="cl" style="pointer-events:none">
+            <div class="cl-icon">📍</div>
+            <div class="cl-body">
+              <div class="cl-lbl">Location</div>
+              <div class="cl-val">Hyderabad, Telangana, India</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="fc">© 2025 Amarender Reddy Voladri. All rights reserved.</div>
+    <div class="fl">Crafted with <span>♥</span> in Hyderabad, India</div>
+  </footer>
+
+  <script>
+    // Cursor
+    const dot = document.getElementById('c-dot'), ring = document.getElementById('c-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY });
+    (function anim() { dot.style.left = mx + 'px'; dot.style.top = my + 'px'; rx += (mx - rx) * .11; ry += (my - ry) * .11; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(anim) })();
+    document.querySelectorAll('a,button').forEach(el => {
+      el.addEventListener('mouseenter', () => { dot.style.width = '18px'; dot.style.height = '18px'; ring.style.width = '50px'; ring.style.height = '50px'; ring.style.opacity = '.4' });
+      el.addEventListener('mouseleave', () => { dot.style.width = ''; dot.style.height = ''; ring.style.width = ''; ring.style.height = ''; ring.style.opacity = '' });
+    });
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target) } }) }, { threshold: .1 });
+    document.querySelectorAll('.r').forEach(el => obs.observe(el));
+
+    // Nav highlight
+    const secs = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      secs.forEach(s => { if (window.scrollY >= s.offsetTop - 88) cur = s.id });
+      document.querySelectorAll('.nav-links a').forEach(a => { a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--gold)' : '' });
+    });
+
+    // Counter animation
+    function animateCounters() {
+      document.querySelectorAll('.h-stat-num').forEach(el => {
+        const target = parseFloat(el.textContent);
+        const isFloat = el.textContent.includes('.');
+        let start = 0, dur = 1600, step = 16;
+        const inc = target / (dur / step);
+        const timer = setInterval(() => {
+          start += inc;
+          if (start >= target) { start = target; clearInterval(timer) }
+          el.textContent = isFloat ? start.toFixed(1) : Math.floor(start) + (el.textContent.includes('+') ? '+' : '');
+        }, step);
+      });
+    }
+    const heroObs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { animateCounters(); heroObs.disconnect() } }, { threshold: .3 });
+    heroObs.observe(document.getElementById('hero'));
+  </script>
+</body>
+
+</html>
